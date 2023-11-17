@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Function to roll a six-sided die
+int rollDie() {
+    return rand() % 6 + 1;
+}
+
+// Function to play the casino game
+void playGame() {
+    printf("Welcome to the Casino Dice Game!\n");
+
+    int die1 = rollDie();
+    int die2 = rollDie();
+    int sum = die1 + die2;
+
+    printf("You rolled: %d + %d = %d\n", die1, die2, sum);
+
+    if (sum == 7 || sum == 11) {
+        printf("Congratulations! You win!\n");
+    } else {
+        printf("Sorry, you lose. Better luck next time!\n");
+    }
+}
+
+int main() {
+    // Seed the random number generator with the current time
+    srand(time(NULL));
+
+    char choice;
+
+    do {
+        playGame();
+
+        printf("Do you want to play again? (y/n): ");
+        scanf(" %c", &choice);
+
+    } while (choice == 'y' || choice == 'Y');
+
+    printf("Thanks for playing. Goodbye!\n");
+
+    return 0;
+}
+CASINO GAME USING C
