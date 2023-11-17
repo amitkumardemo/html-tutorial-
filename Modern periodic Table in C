@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+// Structure to represent an element
+struct Element {
+    int atomicNumber;
+    char symbol[3];
+    char name[20];
+    float atomicWeight;
+};
+
+// Function to display element information
+void displayElement(struct Element element) {
+    printf("Atomic Number: %d\n", element.atomicNumber);
+    printf("Symbol: %s\n", element.symbol);
+    printf("Name: %s\n", element.name);
+    printf("Atomic Weight: %.2f\n", element.atomicWeight);
+    printf("\n");
+}
+
+int main() {
+    // Create an array of elements
+    struct Element periodicTable[5];
+
+    // Populate elements in the periodic table
+    periodicTable[0] = (struct Element){1, "H", "Hydrogen", 1.008};
+    periodicTable[1] = (struct Element){8, "O", "Oxygen", 16.00};
+    periodicTable[2] = (struct Element){16, "S", "Sulfur", 32.06};
+    periodicTable[3] = (struct Element){26, "Fe", "Iron", 55.85};
+    periodicTable[4] = (struct Element){79, "Au", "Gold", 196.97};
+
+    // Display information for each element
+    for (int i = 0; i < 5; ++i) {
+        displayElement(periodicTable[i]);
+    }
+
+    return 0;
+}
