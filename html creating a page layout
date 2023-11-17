@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Page</title>
+</head> 
+
+<body>
+   <header>
+    <h1>MR LBGHELP.COM</h1>
+    <pre>
+        <h2><p>Education             Experiance</p></h2>
+    </pre>
+   </header> 
+   <main>
+    <section>Education : JIET JODHPUR | School (school of Acumen)</section>
+    <section>Experiance : C Language | Photo editing | Video editing</section>
+    <article>My story:</article>
+    <a href="https://google.com"target="_main">
+    <img
+    src="https://blog.hubspot.com/hubfs/image8-2.jpg"
+    alt="Google"
+    height="100"
+    /></a>
+    <aside>This is an ad</aside>
+    <div><p>Amit Kumar</p>
+    <p>co founder of this web page</p>
+    <p>This is my first code in html</p>
+    <p>Thanks for wisiting</p>
+    
+    
+    </div>
+
+    </main>
+
+    <footer
+        <h3>Contact me at at MR LBGHELP.COM</h3>
+    </footer>
+
+
+   
+</body>
+</html>
