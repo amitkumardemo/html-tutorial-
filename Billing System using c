@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <string.h>
+
+// Structure to represent a product
+struct Product {
+    char name[50];
+    float price;
+    int quantity;
+};
+
+// Function to calculate the total cost for a product
+float calculateTotal(struct Product product) {
+    return product.price * product.quantity;
+}
+
+// Function to display the bill for a product
+void displayBill(struct Product product) {
+    printf("\nBill:\n");
+    printf("Product: %s\n", product.name);
+    printf("Price per unit: $%.2f\n", product.price);
+    printf("Quantity: %d\n", product.quantity);
+    printf("Total cost: $%.2f\n", calculateTotal(product));
+}
+
+int main() {
+    struct Product product;
+    
+    // Input product details
+    printf("Enter product name: ");
+    scanf("%s", product.name);
+
+    printf("Enter price per unit: ");
+    scanf("%f", &product.price);
+
+    printf("Enter quantity: ");
+    scanf("%d", &product.quantity);
+
+    // Display the bill
+    displayBill(product);
+
+    return 0;
+}
+#Billing System using c
