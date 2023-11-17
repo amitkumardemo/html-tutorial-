@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int score = 0;
+
+    printf("Welcome to the Quiz Game!\n");
+
+    // Question 1
+    printf("\nQuestion 1: What is the capital of France?\n");
+    printf("a) London\nb) Paris\nc) Berlin\nd) Madrid\n");
+
+    char answer1;
+    scanf(" %c", &answer1);
+
+    if (answer1 == 'b' || answer1 == 'B') {
+        printf("Correct!\n");
+        score++;
+    } else {
+        printf("Wrong answer. The correct answer is b) Paris.\n");
+    }
+
+    // Question 2
+    printf("\nQuestion 2: Which planet is known as the Red Planet?\n");
+    printf("a) Earth\nb) Mars\nc) Venus\nd) Jupiter\n");
+
+    char answer2;
+    scanf(" %c", &answer2);
+
+    if (answer2 == 'b' || answer2 == 'B') {
+        printf("Correct!\n");
+        score++;
+    } else {
+        printf("Wrong answer. The correct answer is b) Mars.\n");
+    }
+
+    // Display final score
+    printf("\nYour final score is: %d out of 2\n", score);
+
+    return 0;
+}
