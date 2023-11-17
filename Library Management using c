@@ -1,0 +1,124 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_BOOKS 100
+#define MAX_USERS 50
+
+// Structure to represent a book
+struct Book {
+    int bookId;
+    char title[100];
+    char author[50];
+    int availableCopies;
+};
+
+// Structure to represent a user
+struct User {
+    int userId;
+    char name[50];
+    int booksBorrowed;
+    int borrowedBookIds[5]; // Assuming a user can borrow up to 5 books
+};
+
+// Function to display book details
+void displayBook(struct Book book) {
+    printf("Book ID: %d\nTitle: %s\nAuthor: %s\nAvailable Copies: %d\n\n",
+           book.bookId, book.title, book.author, book.availableCopies);
+}
+
+// Function to display user details
+void displayUser(struct User user) {
+    printf("User ID: %d\nName: %s\nBooks Borrowed: %d\n",
+           user.userId, user.name, user.booksBorrowed);
+
+    printf("Borrowed Book IDs: ");
+    for (int i = 0; i < user.booksBorrowed; ++i) {
+        printf("%d ", user.borrowedBookIds[i]);
+    }
+    printf("\n\n");
+}
+
+// Function to search for a book by title
+int searchBookByTitle(struct Book books[], int numBooks, char searchTitle[]) {
+    for (int i = 0; i < numBooks; ++i) {
+        if (strcmp(books[i].title, searchTitle) == 0) {
+            return i; // Book found, return its index
+        }
+    }
+    return -1; // Book not found
+}
+
+// Function to borrow a book
+void borrowBook(struct Book books[], int numBooks, struct User *user, int bookId) {
+    int index = bookId - 1; // Assuming book IDs start from 1
+
+    if (index >= 0 && index < numBooks && books[index].availableCopies > 0) {
+        // Book is available, borrow it
+        user->borrowedBookIds[user->booksBorrowed] = bookId;
+        user->booksBorrowed++;
+        books[index].availableCopies--;
+
+        printf("Book borrowed successfully.\n");
+    } else {
+        printf("Book not available for borrowing.\n");
+    }
+}
+
+// Function to return a book
+void returnBook(struct Book books[], int numBooks, struct User *user, int bookId) {
+    int index = bookId - 1;
+
+    if (index >= 0 && index < numBooks && user->booksBorrowed > 0) {
+        // User has borrowed this book, return it
+        for (int i = 0; i < user->booksBorrowed; ++i) {
+            if (user->borrowedBookIds[i] == bookId) {
+                user->booksBorrowed--;
+
+                // Increase available copies of the book
+                books[index].availableCopies++;
+
+                // Remove the book ID from the user's borrowed list
+                for (int j = i; j < user->booksBorrowed; ++j) {
+                    user->borrowedBookIds[j] = user->borrowedBookIds[j + 1];
+                }
+
+                printf("Book returned successfully.\n");
+                return;
+            }
+        }
+    }
+
+    printf("Book not found in user's borrowed list.\n");
+}
+
+int main() {
+    struct Book library[MAX_BOOKS] = {
+        {1, "The Catcher in the Rye", "J.D. Salinger", 5},
+        {2, "To Kill a Mockingbird", "Harper Lee", 3},
+        // Add more books...
+    };
+
+    struct User users[MAX_USERS] = {
+        {1, "John Doe", 0, {}},
+        {2, "Jane Smith", 0, {}},
+        // Add more users...
+    };
+
+    // Example usage
+    int userIndex = 0; // Index of the user borrowing/returning books
+
+    // Borrow a book
+    borrowBook(library, MAX_BOOKS, &users[userIndex], 1);
+
+    // Display user details
+    displayUser(users[userIndex]);
+
+    // Return a book
+    returnBook(library, MAX_BOOKS, &users[userIndex], 1);
+
+    // Display book details
+    displayBook(library[0]);
+
+    return 0;
+}
+Library management using c
