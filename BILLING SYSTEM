@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Define structures to represent customer and product
+struct Customer {
+    int id;
+    char name[50];
+};
+
+struct Product {
+    int id;
+    char name[50];
+    float price;
+};
+
+// Define structures to represent a line item in an invoice
+struct InvoiceItem {
+    struct Product product;
+    int quantity;
+};
+
+// Define a structure for an invoice
+struct Invoice {
+    struct Customer customer;
+    struct InvoiceItem items[10];  // Assume a maximum of 10 items per invoice
+    int itemCount;
+};
+
+// Function prototypes
+void displayMenu();
+void addCustomer();
+void addProduct();
+void generateInvoice();
+
+// Global arrays to store customers and products
+struct Customer customers[10];
+struct Product products[10];
+int customerCount = 0;
+int productCount = 0;
+
+int main() {
+    int choice;
+
+    do {
+        displayMenu();
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addCustomer();
+                break;
+            case 2:
+                addProduct();
+                break;
+            case 3:
+                generateInvoice();
+                break;
+            case 4:
+                printf("Exiting the billing system. Goodbye!\n");
+                break;
+            default:
+                printf("Invalid choice. Please enter a valid option.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+void displayMenu() {
+    printf("\n=== Billing System Menu ===\n");
+    printf("1. Add Customer\n");
+    printf("2. Add Product\n");
+    printf("3. Generate Invoice\n");
+    printf("4. Exit\n");
+}
+
+void addCustomer() {
+    if (customerCount < 10) {
+        printf("Enter customer name: ");
+        scanf("%s", customers[customerCount].name);
+        customers[customerCount].id = customerCount + 1;
+        customerCount++;
+        printf("Customer added successfully.\n");
+    } else {
+        printf("Maximum number of customers reached.\n");
+    }
+}
+
+void addProduct() {
+    if (productCount < 10) {
+        printf("Enter product name: ");
+        scanf("%s", products[productCount].name);
+        printf("Enter product price: ");
+        scanf("%f", &products[productCount].price);
+        products[productCount].id = productCount + 1;
+        productCount++;
+        printf("Product added successfully.\n");
+    } else {
+        printf("Maximum number of products reached.\n");
+    }
+}
+
+void generateInvoice() {
+    struct Invoice invoice;
+    int customerId, productId, quantity;
+
+    printf("Enter customer ID: ");
+    scanf("%d", &customerId);
+
+    // Find customer by ID
+    int customerIndex = -1;
+    for (int i = 0; i < customerCount; i++) {
+        if (customers[i].id == customerId) {
+            customerIndex = i;
+            break;
+        }
+    }
+
+    if (customerIndex == -1) {
+        printf("Customer not found.\n");
+        return;
+    }
+
+    // Set customer for the invoice
+    invoice.customer = customers[customerIndex];
+    invoice.itemCount = 0;
+
+    // Add products to the invoice
+    do {
+        printf("Enter product ID (0 to finish): ");
+        scanf("%d", &productId);
+
+        if (productId != 0) {
+            // Find product by ID
+            int productIndex = -1;
+            for (int i = 0; i < productCount; i++) {
+                if (products[i].id == productId) {
+                    productIndex = i;
+                    break;
+                }
+            }
+
+            if (productIndex != -1) {
+                // Set product and quantity for the invoice item
+                invoice.items[invoice.itemCount].product = products[productIndex];
+                printf("Enter quantity: ");
+                scanf("%d", &quantity);
+                invoice.items[invoice.itemCount].quantity = quantity;
+                invoice.itemCount++;
+            } else {
+                printf("Product not found.\n");
+            }
+        }
+    } while (productId != 0);
+
+    // Display the generated invoice
+    printf("\n=== Invoice ===\n");
+    printf("Customer: %s\n", invoice.customer.name);
+    printf("------------------------------\n");
+    printf("Product\t\tQuantity\tPrice\n");
+    float totalAmount = 0;
+
+    for (int i = 0; i < invoice.itemCount; i++) {
+        struct InvoiceItem item = invoice.items[i];
+        printf("%s\t\t%d\t\t%.2f\n", item.product.name, item.quantity, item.product.price);
+        totalAmount += item.quantity * item.product.price;
+    }
+
+    printf("------------------------------\n");
+    printf("Total Amount: %.2f\n", totalAmount);
+}
